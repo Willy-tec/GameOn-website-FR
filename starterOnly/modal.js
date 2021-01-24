@@ -68,10 +68,10 @@ let isValidFirst = inputFirst.value.length>=3? true: false,
     isValidCheck = false,
     isValidBirthDate = inputBirth.value != "" ? true : false,
     isAgree = inputAgree.checked;
-console.log(inputBirth.value)
     //we test every checkbox, and if only one is true, so the validCheck is set to true.
     checkBox.forEach(elt => {if(elt.checked)isValidCheck = true;});
 
+    //we test every field, and print an error message, or clear it.
     if(!isValidFirst) errorMsg(inputFirst, errorStr.first);
       else removeError(inputFirst);
     if(!isValidLast) errorMsg(inputLast, errorStr.last);
@@ -86,6 +86,8 @@ console.log(inputBirth.value)
       else removeError(inputAgree)
     if(!isValidBirthDate) errorMsg(inputBirth, errorStr.birth);
       else removeError(inputBirth)
+
+
 return (isValidFirst && isValidLast && isValidMail && isValidQuantity && isValidBirthDate&& isValidCheck &&isAgree);
 }
 
