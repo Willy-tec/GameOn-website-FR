@@ -36,17 +36,6 @@ closeBtn.addEventListener("click", closeModal)
 function closeModal(){
   modalbg.style.display = "none";
 }
-;
-
-//those variable are used for verifying the validity of the form
-let isValidFirst = false,
-    isValidLast = false,
-    isValidMail = false,
-    isValidQuantity = false,
-    isValidCheck = false,
-    isValidBirthDate = false,
-    isAgree = inputAgree.checked;
-
 
 // Error string for the text print when we have an error. You just need to change the text here, for changing every where else.
 const errorStr = {
@@ -61,45 +50,38 @@ const errorStr = {
 
 //function for validating the submit form. We test each variable, and send back the boolean response.
 const validate = function(){
-let isValidFirst = inputFirst.value.length>=3? true: false,
-    isValidLast = inputLast.value.length>=3? true: false,
-    isValidMail = inputMail.value.length>=2? true: false,
-    isValidQuantity = inputQuantity.value.length>0,
-    isValidCheck = false,
-    isValidBirthDate = inputBirth.value != "" ? true : false,
-    isAgree = inputAgree.checked;
-    //we test every checkbox, and if only one is true, so the validCheck is set to true.
+// we use the ternary operator, and test the input field.
+// if input >= 2 => remove the error msg, and set isValid to true, else if input <2 => print the error message, and set isValid to false.
+
+let isValidFirst = inputFirst.value.length >= 2 ? removeError(inputFirst) : errorMsg(inputFirst, errorStr.first),
+    isValidLast = inputLast.value.length >= 2 ? removeError(inputLast) : errorMsg(inputLast, errorStr.last),
+    isValidMail = inputMail.value.length >= 2 ? removeError(inputMail) : errorMsg(inputMail, errorStr.mail),
+    isValidQuantity = inputQuantity.value.length > 0 ? removeError(inputQuantity) : errorMsg(inputQuantity, errorStr.quantity) ,
+    isValidBirthDate = inputBirth.value != "" ? removeError(inputBirth) : errorMsg(inputBirth, errorStr.birth),
+    isAgree = inputAgree.checked ? removeError(inputAgree) : errorMsg(inputAgree, errorStr.agree);
+
+//we test every checkbox, and if only one is true, so the validCheck is set to true.
+//we test every checkbox, and print an error message, or clear it.
+
+    let isValidCheck = false;
     checkBox.forEach(elt => {if(elt.checked)isValidCheck = true;});
-
-    //we test every field, and print an error message, or clear it.
-    if(!isValidFirst) errorMsg(inputFirst, errorStr.first);
-      else removeError(inputFirst);
-    if(!isValidLast) errorMsg(inputLast, errorStr.last);
-      else removeError(inputLast);
-    if(!isValidMail) errorMsg(inputMail, errorStr.mail);
-      else removeError(inputMail);
-    if(!isValidQuantity) errorMsg(inputQuantity, errorStr.quantity);
-      else removeError(inputQuantity)
     if(!isValidCheck) errorMsg(checkBox[0], errorStr.checkBox);
-      else removeError(checkBox[0])
-    if(!isAgree) errorMsg(inputAgree, errorStr.agree);
-      else removeError(inputAgree)
-    if(!isValidBirthDate) errorMsg(inputBirth, errorStr.birth);
-      else removeError(inputBirth)
+    else removeError(checkBox[0])
 
-
-return (isValidFirst && isValidLast && isValidMail && isValidQuantity && isValidBirthDate&& isValidCheck &&isAgree);
+// we combine every boolean with an AND operator, and if only one is set to false, all the operation is false.
+return (isValidFirst && isValidLast && isValidMail && isValidQuantity && isValidBirthDate && isValidCheck && isAgree);
 }
 
 // the function set the attribute for the error message to be print
 function errorMsg(elt, txt){
-
   elt.parentNode.setAttribute("data-error-visible", "true");
   elt.parentNode.setAttribute("data-error", txt);
+  return false;
 }
 
 // the function remove the attribute for the error message to be clear
 function removeError(elt){
   elt.parentNode.removeAttribute("data-error");
     elt.parentNode.removeAttribute("data-error-visible");
+    return true;
 }
