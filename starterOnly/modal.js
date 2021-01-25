@@ -13,14 +13,15 @@ const modalBtn = document.querySelectorAll(".modal-btn");
 const formData = document.querySelectorAll(".formData");
 
 const closeBtn = document.querySelector(".close");
-const inputFirst = document.querySelector("#first")
-const inputLast = document.querySelector("#last")
-const inputMail = document.querySelector("#email")
-const inputQuantity = document.querySelector("#quantity")
-const checkBox = document.querySelectorAll('[name="location"]')
-const inputAgree = document.querySelector("#checkbox1")
-const inputBirth = document.querySelector("#birthdate")
+const inputFirst = document.querySelector("#first");
+const inputLast = document.querySelector("#last");
+const inputMail = document.querySelector("#email");
+const inputQuantity = document.querySelector("#quantity");
+const checkBox = document.querySelectorAll('[name="location"]');
+const inputAgree = document.querySelector("#checkbox1");
+const inputBirth = document.querySelector("#birthdate");
 
+const timer = 100000;
 // launch modal event
 modalBtn.forEach((btn) => btn.addEventListener("click", launchModal));
 
@@ -49,7 +50,7 @@ const errorStr = {
 }
 
 //function for validating the submit form. We test each variable, and send back the boolean response.
-const validate = function(){
+function validate(e){
 // we use the ternary operator, and test the input field.
 // if input >= 2 => remove the error msg, and set isValid to true, else if input <2 => print the error message, and set isValid to false.
 
@@ -69,7 +70,16 @@ let isValidFirst = inputFirst.value.length >= 2 ? removeError(inputFirst) : erro
     else removeError(checkBox[0])
 
 // we combine every boolean with an AND operator, and if only one is set to false, all the operation is false.
-return (isValidFirst && isValidLast && isValidMail && isValidQuantity && isValidBirthDate && isValidCheck && isAgree);
+
+let validation = isValidFirst && isValidLast && isValidMail && isValidQuantity && isValidBirthDate && isValidCheck && isAgree
+
+//we print the validation message, and wait for the final click for submit the data
+if(validation) {
+  document.querySelector(".success").style.display = "block";
+  document.querySelector("form").style.display = "none";
+  window.addEventListener('click', ()=>document.querySelector("form").submit())
+}
+return false
 }
 
 // the function set the attribute for the error message to be print

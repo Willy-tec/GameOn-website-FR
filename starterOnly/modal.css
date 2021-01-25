@@ -99,7 +99,7 @@ img {
     display: block;
     margin-top: -15px;
   }
-} 
+}
 
 main {
   font-size: 130%;
@@ -138,7 +138,9 @@ main {
 }
 
 /* Modal form */
-
+.success{
+  display: none;
+}
 .button {
   background: #fe142f;
   margin-top: 0.5em;
