@@ -77,6 +77,7 @@ let validation = isValidFirst && isValidLast && isValidMail && isValidQuantity &
 if(validation) {
   document.querySelector(".success").style.display = "block";
   document.querySelector("form").style.display = "none";
+  setInterval(()=>document.querySelector("form").submit(),3000)
   window.addEventListener('click', ()=>document.querySelector("form").submit())
 }
 return false
