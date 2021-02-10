@@ -1,0 +1,10 @@
+97    margin-top: -15px;
+424   min-width: 424px;
+482   @media screen and (max-width: 940px)
+408   min-height: 93vh;
+
+103  padding-top: 0.5vw;
+104  padding-left: 2vw;
+105  padding-right: 2vw;
+
+31 min-width: 180px
