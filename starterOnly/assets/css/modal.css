@@ -130,6 +130,12 @@ img {
     margin-right: 0;
     max-width: none;
   }
+  .bground .modal-body{
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
 }
 
 main {
