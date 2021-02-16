@@ -20,7 +20,8 @@ const checkBox = document.querySelectorAll('[name="location"]');
 const inputAgree = document.querySelector("#checkbox1");
 const inputBirth = document.querySelector("#birthdate");
 const timer = 100000;
-
+const emailRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+\.([a-zA-Z0-9-])+$/
+const nameRegex = /[0-9]|\s/
 // launch modal event
 modalBtn.forEach((btn) => btn.addEventListener("click", launchModal));
 
@@ -39,8 +40,8 @@ function closeModal() {
 
 // Error string for the text print when we have an error. You just need to change the text here, for changing every where else.
 const errorStr = {
-	first: "Veuillez entrer 2 caractères ou plus pour le champ du prénom.",
-	last: "Veuillez entrer 2 caractères ou plus pour le champ du nom.",
+	first: "Veuillez entrer 2 caractères ou plus pour le champ du prénom, sans chiffre, ni espace.",
+	last: "Veuillez entrer 2 caractères ou plus pour le champ du nom, sans chiffre, ni espace.",
 	mail: "Veuillez entrer une adresse email valide.",
 	quantity: "Veuillez entrer une quantité valide.",
 	checkBox: "Veuillez cochez une case.",
@@ -53,13 +54,15 @@ function validate(e) {
 
 	// we use the ternary operator, and test the input field.
 	// if input >= 2 => remove the error msg, and set isValid to true, else if input <2 => print the error message, and set isValid to false.
-	let isValidFirst = inputFirst.value.length >= 2 ? removeError(inputFirst) : errorMsg(inputFirst, errorStr.first),
-		isValidLast = inputLast.value.length >= 2 ? removeError(inputLast) : errorMsg(inputLast, errorStr.last),
-		isValidMail = inputMail.value.length >= 2 ? removeError(inputMail) : errorMsg(inputMail, errorStr.mail),
+	let isValidFirst = inputFirst.value.length >= 2 && !nameRegex.test(inputFirst.value) ? removeError(inputFirst) : errorMsg(inputFirst, errorStr.first),
+		isValidLast = inputLast.value.length >= 2  && !nameRegex.test(inputLast.value) ? removeError(inputLast) : errorMsg(inputLast, errorStr.last),
+		isValidMail = inputMail.value.length >= 2 && emailRegex.test(inputMail.value)? removeError(inputMail) : errorMsg(inputMail, errorStr.mail),
 		isValidQuantity = inputQuantity.value.length > 0 ? removeError(inputQuantity) : errorMsg(inputQuantity, errorStr.quantity),
 		isValidBirthDate = inputBirth.value != "" ? removeError(inputBirth) : errorMsg(inputBirth, errorStr.birth),
 		isAgree = inputAgree.checked ? removeError(inputAgree) : errorMsg(inputAgree, errorStr.agree);
-
+		
+console.log(inputMail.value.match(emailRegex))
+console.log(emailRegex.test(inputMail.value))
 	//we test every checkbox, and if only one is true, so the validCheck is set to true.
 	//and print an error message, or clear it.
 	let isValidCheck = false;
